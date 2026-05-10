@@ -9,6 +9,9 @@ on:
         description: 'Nhập tên trận đấu (Ví dụ: MU vs Barca)'
         required: true
         default: 'Canal+ Sport'
+      user_chat_id: # Thêm ô này
+        description: 'ID Telegram của người gửi'
+        required: true
 
 jobs:
   check_link:
