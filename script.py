@@ -4,9 +4,7 @@ import requests
 
 def send_telegram(message):
     token = os.getenv('TG_TOKEN')
-    #chat_id = os.getenv('TG_CHAT_ID')
-    # Thay vì lấy từ Secret cố định, lấy từ input của GitHub
-    chat_id = os.getenv('USER_CHAT_ID')
+    chat_id = os.getenv('TG_CHAT_ID')
     if token and chat_id:
         url = f"https://api.telegram.org/bot{token}/sendMessage"
         data = {"chat_id": chat_id, "text": message}
