@@ -9,7 +9,7 @@ on:
         description: 'Nhập tên trận đấu (Ví dụ: MU vs Barca)'
         required: true
         default: 'Canal+ Sport'
-      user_chat_id: # Thêm ô này
+      chat_id: # Thêm ô này
         description: 'ID Telegram của người gửi'
         required: true
 
@@ -27,7 +27,7 @@ jobs:
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
-          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          TG_CHAT_ID: ${{ github.event.inputs.chat_id }} # Dùng ID động này để gửi tin nhắn
           MATCH_URL: ${{ github.event.inputs.match_url }}
           MATCH_NAME: ${{ github.event.inputs.match_name }} # Thêm dòng này
         run: python script.py
