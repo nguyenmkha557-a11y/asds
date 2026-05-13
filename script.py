@@ -76,7 +76,7 @@ def get_link():
     #result = subprocess.run(cmd, capture_output=True, text=True)
     #link = result.stdout.strip()
 
-    html = requests.get(url).text
+    html = requests.get(target_url).text
 
     link = re.findall(r'data-fileurl="([^"]+)"', html)
 
