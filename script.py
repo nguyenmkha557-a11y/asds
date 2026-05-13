@@ -39,7 +39,13 @@ def update_gist(new_link, match_name):
         current_content = '#EXTM3U url-tvg="https://vnepg.site/epg.xml"'
 
     # 2. Tạo nội dung mới (Nối thêm vào cuối)
-    new_entry = f'\n#EXTINF:-1 group-title="THỂ THAO QUỐC TẾ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/1/1a/Canal%2B_Sport_2015.png",{match_name}\n{new_link}'
+     vlc_options = (
+        '#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\n'
+        '#EXTVLCOPT:http-referrer=https://bunchatv4.net/\n'
+        '#EXTVLCOPT:http-origin=https://bunchatv4.net'
+    )
+    #new_entry = f'\n#EXTINF:-1 group-title="THỂ THAO QUỐC TẾ" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/1/1a/Canal%2B_Sport_2015.png",{match_name}\n{new_link}'
+    new_entry = f'\n#EXTINF:-1 group-title="LIVE" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/1/1a/Canal%2B_Sport_2015.png", {match_name}\n{vlc_options}\n{new_link}'
     updated_content = current_content.strip() + new_entry
 
     # 3. Ghi đè nội dung ĐÃ NỐI DÀI lên Gist
