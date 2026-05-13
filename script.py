@@ -1,6 +1,7 @@
 import os
 import subprocess
 import requests
+import re
 
 def send_telegram(message):
     token = os.getenv('TG_TOKEN')
@@ -71,9 +72,15 @@ def get_link():
     if not target_url:
         return
 
-    cmd = ['yt-dlp', '-g', '--referer', 'https://bunchatv4.net/', target_url]
-    result = subprocess.run(cmd, capture_output=True, text=True)
-    link = result.stdout.strip()
+    #cmd = ['yt-dlp', '-g', '--referer', 'https://bunchatv4.net/', target_url]
+    #result = subprocess.run(cmd, capture_output=True, text=True)
+    #link = result.stdout.strip()
+
+    html = requests.get(url).text
+
+    link = re.findall(r'data-fileurl="([^"]+)"', html)
+
+
     
     if link and "http" in link:
         update_gist(link, match_name)
