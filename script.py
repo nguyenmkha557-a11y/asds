@@ -2,7 +2,7 @@ import os
 import subprocess
 import requests
 import re
-from bs4 import BeautifulSoup
+
 
 def send_telegram(message):
     token = os.getenv('TG_TOKEN')
