@@ -38,8 +38,8 @@ def update_gist(new_link, match_name):
     if not current_content.strip():
         current_content = '#EXTM3U url-tvg="https://vnepg.site/epg.xml"'
 
-    # 2. Tạo nội dung mới (Nối thêm vào cuối)
-     vlc_options = (
+    # Định nghĩa các dòng option bổ sung
+    vlc_options = (
         '#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\n'
         '#EXTVLCOPT:http-referrer=https://bunchatv4.net/\n'
         '#EXTVLCOPT:http-origin=https://bunchatv4.net'
