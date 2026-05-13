@@ -2,6 +2,7 @@ import os
 import subprocess
 import requests
 import re
+from bs4 import BeautifulSoup
 
 def send_telegram(message):
     token = os.getenv('TG_TOKEN')
@@ -76,16 +77,52 @@ def get_link():
     #result = subprocess.run(cmd, capture_output=True, text=True)
     #link = result.stdout.strip()
 
-    html = requests.get(target_url).text
+    try:
+        response = requests.get(
+            target_url,
+            headers={
+                "User-Agent": "Mozilla/5.0",
+                "Referer": "https://bunchatv4.net/"
+            },
+            timeout=15
+        )
 
-    link = re.findall(r'data-fileurl="([^"]+)"', html)
+        html = response.text
+
+        # Lấy tất cả data-fileurl
+        links = re.findall(r'data-fileurl="([^"]+)"', html)
+
+        if not links:
+            send_telegram(f"❌ Không tìm thấy stream cho: {match_name}")
+            return
+
+        # Chỉ lấy link taoxanh hoặc alilicloud
+        valid_link = None
+
+        for link in links:
+            if (
+                "taoxanh" in link
+                or "dlqcalr.alilicloud.com/live/" in link
+            ):
+                valid_link = link
+                break
+
+        if valid_link:
+            print("Found:", valid_link)
+            update_gist(valid_link, match_name)
+        else:
+            send_telegram(f"❌ Không có link hợp lệ cho: {match_name}")
+
+    except Exception as e:
+        send_telegram(f"❌ Lỗi lấy link {match_name}\n{str(e)}")
+
 
 
     
-    if link and "http" in link:
-        update_gist(link, match_name)
-    else:
-        send_telegram(f"❌ Không tìm thấy link cho trận: {match_name}")
+    #if link and "http" in link:
+       # update_gist(link, match_name)
+   # else:
+        #send_telegram(f"❌ Không tìm thấy link cho trận: {match_name}")
 
 if __name__ == "__main__":
     get_link()
